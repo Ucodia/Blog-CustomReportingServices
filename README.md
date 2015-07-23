@@ -1,5 +1,6 @@
 Custom Reporting Services
 ==
+*Written on the 8th of October 2011.*
 
 If you have ever used SQL Server Reporting Services (SSRS) you might have been developing reports using Report Builder or Business Intelligence Development Studio (BIDS). Most of time, these tools are just fine for developing reports that fits your needs or your customer requirements. But sometimes you need to build up your own reporting tool, which means you will have to get your hands dirty and inject your own reporting soup into the SSRS engine. The goal of this article serie is to show you the way to building highly customized reporting tool that will fit your needs. These articles mainly targets SSRS 2008 R2 and the Denali CTP3 version and might differ from previous versions.
 
