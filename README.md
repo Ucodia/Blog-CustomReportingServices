@@ -2,11 +2,11 @@ Custom Reporting Services
 ==
 *Written on the 8th of October 2011.*
 
-If you have ever used SQL Server Reporting Services (SSRS) you might have been developing reports using Report Builder or Business Intelligence Development Studio (BIDS). Most of time, these tools are just fine for developing reports that fits your needs or your customer requirements. But sometimes you need to build up your own reporting tool, which means you will have to get your hands dirty and inject your own reporting soup into the SSRS engine. The goal of this article serie is to show you the way to building highly customized reporting tool that will fit your needs. These articles mainly targets SSRS 2008 R2 and the Denali CTP3 version and might differ from previous versions.
+If you have ever used SQL Server Reporting Services (SSRS) you might have been developing reports using Report Builder or Business Intelligence Development Studio (BIDS). Most of time, these tools are just fine for developing reports that fits your needs or your customer requirements. But sometimes you need to build tooling to go the extra mile, which means you will have to get your hands under the hood and inject your own reporting soup into the SSRS engine. The goal of this article is to show you the way to building highly customized reporting tool that will fit your needs. These articles mainly targets SSRS 2008 R2 and the Denali CTP3 version and might differ from previous versions.
 
-First stop: the RDL object model. RDL stands for Report Language Defintion. It is a XML based language developed by Microsoft and firstly introduced with the SSRS for SQL Server 2000 release. Every SSRS object you will have to play with are defined with RDL and that is why both the BIDS report designer and Report Builder are using the [Microsoft.ReportingServices.RdlObjectModel][1] namespace to build them up. Now let's have a look on how we can take advantage of this model and go beyond the designers functionalities.
+First stop: the RDL object model. RDL stands for Report Language Defintion. It is a XML based language developed by Microsoft and introduced for the first time with SSRS for SQL Server 2000. Every SSRS object you will have to play with are defined with RDL and that is why both the BIDS report designer and Report Builder are using the [Microsoft.ReportingServices.RdlObjectModel][1] namespace to build them up. Now let's have a look on how we can take advantage of this model and go beyond the designers functionalities.
 
-If you wonder how you can generate and manipulate reports you might bump onto this [MSDN article][2]. Basically, all it says is that you can use [XmlDocument][3] or [XmlTextWriter][4] to write your own custom reports. Quite boring and painful. But if BIDS and Report Builder uses a specific model to build up reports, why can't we also take advantage of these functionalities? Of course we can!
+If you wonder how you can generate and manipulate reports you might bump onto this [MSDN article][2]. Basically, all it says is that you can use [XmlDocument][3] or [XmlTextWriter][4] to write your own custom reports, which means writing everything from scratch. But if BIDS and Report Builder uses a specific model to build up reports, why can't we also take advantage of these functionalities? Of course we can!
 
 ### Create a report from scratch
 
@@ -47,11 +47,11 @@ myTextBox.Paragraphs[0].TextRuns[0].Value = "Hello World";
 myReport.Body.ReportItems.Add(myTextBox);
 ```
 
-Note that whenever you call the [Body][8] property from the Report object, it will return the body of the first [ReportSection][9] of the current report. Also setting the name of your report items is really important. If you forget to do so, you won't be able to run your report and designers will not open it.
+Note that whenever you call the [Body][8] property from the Report object, it will return the body of the first [ReportSection][9] of the current report. Also setting the name of your report items is really important. If you forget to do so, you won't be able to run your report and Report Builder won't open it.
 
 ### Create a report from template
 
-So here we built a basic report that works and could run on SSRS. But as you have noticed something not really nice is that you have to set the layout manually and it is clearly not an optimized way of building custom reports. So what we will do is create a basic report that can be used as a template.
+So here we built a basic report that works and could run on SSRS. But as you may have noticed we set the whole layout manually, so to streamline a little bit, what we will do instead is create a basic report that can be used as a template.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -109,8 +109,6 @@ myTextBox.Paragraphs[0].TextRuns[0].Value = "Hello World";
 
 myReport.Body.ReportItems.Add(myTextBox);
 ```
-
-As you can see it is a bunch of somewhat boring and hard coded instructions we saved here.
 
 You are now ready to build customized reporting tool that gives you full control on how the report will be generated. I strongly suggest to build some business relevant reports and then analyse the XML structure to get more familiar with the most common RDL objects. This will give you a better understanding on how you can extend the designer capabilities and shape the report generation.
 
